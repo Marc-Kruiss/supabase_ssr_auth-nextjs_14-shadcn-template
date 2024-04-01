@@ -72,7 +72,13 @@ export default function Page() {
       )
       .subscribe();
     setChannel(channel);
-  }, []);
+
+    // Cleanup-Funktion, die bei Unmount aufgerufen wird
+    return () => {
+      console.log("unsubscribe");
+      channel.unsubscribe();
+    };
+  }, [supabase]);
 
   return (
     <>
