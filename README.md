@@ -1,21 +1,58 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# Next.js Project with Prisma, Supabase, and Shadcn
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+## Introduction
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+This project demonstrates setting up a Next.js application utilizing Prisma as an ORM, Supabase for authentication and real-time database functionalities, Shadcn for UI components and styling, and Google Sign-Up for authentication. It also includes the use of the new `supabase/ssr` package for creating Supabase clients optimized for Server-Side Rendering.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Dependencies](#dependencies)
+- [Configuration](#configuration)
+- [Examples](#examples)
+- [Troubleshooting](#troubleshooting)
+- [Contributors](#contributors)
+- [License](#license)
+
+## Installation
+
+To get started with this project, follow these steps:
+
+1. Clone the repository.
+2. Install dependencies by running `npm install`.
+3. Populate your `.env` file with necessary environment variables including `DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+
+## Usage
+
+### Prisma
+
+1. Initialize Prisma using `npx prisma init`.
+2. Add your database model to `schema.prisma` and execute `npx prisma db push` to sync your database.
+
+### Supabase
+
+1. Set up a new Supabase project and add the URL and Anon Key to your `.env` file.
+2. Install the Supabase CLI and generate types based on your schema with `npx supabase gen types typescript --project-id YOUR_PROJECT_ID`.
+
+### Shadcn
+
+1. Initialize Shadcn with `npx shadcn-ui@latest init` following the on-screen instructions.
+2. To install all Shadcn components, run `npx shadcn-ui@latest add`.
+
+### Supabase SSR
+
+Utilize the `supabase/ssr` package for creating Supabase clients. This involves setting up client, middleware, and server utilities under the `utils/supabase` directory.
+
+- **Client:** `utils/supabase/client.ts`
+- **Middleware:** `utils/supabase/middleware.ts`
+- **Server:** `utils/supabase/server.ts`
+
+### Authentication
+
+Implement sign up, sign in, and sign out functionalities using Supabase's authentication features, including Google Sign-Up.
 
 ## Features
 
@@ -28,66 +65,48 @@
   - It just works!
 - supabase-ssr. A package to configure Supabase Auth to use cookies
 - Styling with [Tailwind CSS](https://tailwindcss.com)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+- Prisma ORM for simplified database querying.
+- Supabase for real-time database and authentication.
+- Shadcn for sleek UI components and styling.
+- Integration with Google Sign-Up for an additional authentication method.
+- Supabase SSR for optimized server-side Supabase client creation.
 
-## Demo
+## Dependencies
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+- Next.js
+- Prisma
+- Supabase
+- Shadcn
+- @supabase/auth-helpers-nextjs
+- next-themes
+- supabase/ssr
 
-## Deploy to Vercel
+## Configuration
 
-Vercel deployment will guide you through creating a Supabase account and project.
+Key configurations involve setting up the `.env` file and customizing the `schema.prisma` for your database models.
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+## Examples
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This%20starter%20configures%20Supabase%20Auth%20to%20use%20cookies%2C%20making%20the%20user's%20session%20available%20throughout%20the%20entire%20Next.js%20app%20-%20Client%20Components%2C%20Server%20Components%2C%20Route%20Handlers%2C%20Server%20Actions%20and%20Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png&integration-ids=oac_VqOgBHqhEoFTPzGkPd7L0iH6)
+A basic usage example is described in the [Usage](#usage) section.
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+## Troubleshooting
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+For any issues encountered during setup or usage, refer to the official documentation of the technologies used.
 
-## Clone and run locally
+## Contributors
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+Feel free to contribute to this project. Any help is welcomed!
 
-2. Create a Next.js app using the Supabase Starter template npx command
+## License
 
-   ```bash
-   npx create-next-app -e with-supabase
-   ```
+This project is licensed under the MIT License. For more details, see the `LICENSE` file.
 
-3. Use `cd` to change into the app's directory
+## Footer
 
-   ```bash
-   cd name-of-new-app
-   ```
+### GitHub Repository
 
-4. Rename `.env.local.example` to `.env.local` and update the following:
+For the source code and latest updates, visit the official Supabase GitHub repository: [Your GitHub Repository URL](#https://github.com/supabase/supabase)
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
+### Reference Blog Post
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
-
-5. You can now run the Next.js local development server:
-
-   ```bash
-   npm run dev
-   ```
-
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
-
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
-
-## Feedback and issues
-
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+This project setup was inspired by and based on the blog post: ["Setting up a Next.js project with Prisma"](https://dev.to/isaacdyor/setting-up-nextjs-project-with-prisma-200j). For a detailed guide and additional context, check out this resource.
