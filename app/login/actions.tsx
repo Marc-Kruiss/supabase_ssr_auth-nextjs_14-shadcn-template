@@ -1,10 +1,9 @@
+"use server";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const signIn = async (formData: FormData) => {
-  "use server";
-
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const supabase = createClient();
@@ -22,8 +21,6 @@ export const signIn = async (formData: FormData) => {
 };
 
 export const signUp = async (formData: FormData) => {
-  "use server";
-
   const origin = headers().get("origin");
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -46,10 +43,8 @@ export const signUp = async (formData: FormData) => {
 };
 
 export const signInWithGoogleOAuth = async () => {
-  "use server";
   const origin = headers().get("origin");
   const supabase = createClient();
-
   const { error, data } = await supabase.auth.signInWithOAuth({
     options: {
       redirectTo: `${origin}/auth/callback`,
