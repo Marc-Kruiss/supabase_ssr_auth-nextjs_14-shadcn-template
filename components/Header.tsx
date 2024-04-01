@@ -17,7 +17,7 @@ export default function Header() {
           <NextLogo />
         </a>
       </div>
-      <h1 className="sr-only">Supabase and Next.js Starter Template</h1>
+      <h1 className="sr-only">Supabase and Next.js/Prisma/Shadcn Template</h1>
       <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
         The fastest way to build apps with{" "}
         <a
