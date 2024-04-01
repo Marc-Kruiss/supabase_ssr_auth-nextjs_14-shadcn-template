@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const session = await supabase.auth.exchangeCodeForSession(code);
   }
 
   // URL to redirect to after sign up process completes
