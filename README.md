@@ -101,11 +101,11 @@ Feel free to contribute to this project. Any help is welcomed!
 
 This project is licensed under the MIT License. For more details, see the `LICENSE` file.
 
-## Footer
+## References
 
 ### GitHub Repository
 
-For the source code and latest updates, visit the official Supabase GitHub repository: [Your GitHub Repository URL](#https://github.com/supabase/supabase)
+For the source code and latest updates, visit the official Supabase GitHub repository: ["Supabase Github"](https://github.com/supabase/supabase)
 
 ### Reference Blog Post
 
