@@ -1,8 +1,8 @@
-# Next.js Project with Prisma, Supabase, and Shadcn
+# Next.js Project with Prisma, Supabase, TailwindCSS and Shadcn
 
 ## Introduction
 
-This project demonstrates setting up a Next.js application utilizing Prisma as an ORM, Supabase for authentication and real-time database functionalities, Shadcn for UI components and styling, and Google Sign-Up for authentication. It also includes the use of the new `supabase/ssr` package for creating Supabase clients optimized for Server-Side Rendering.
+This project demonstrates setting up a Next.js application utilizing Prisma as an ORM, Supabase for authentication and real-time database functionalities, Shadcn for UI components and styling (with TailwindCSS), and Google Sign-Up for authentication. It also includes the use of the new `supabase/ssr` package for creating Supabase clients optimized for Server-Side Rendering.
 
 ## Table of Contents
 
