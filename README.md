@@ -36,6 +36,77 @@ To get started with this project, follow these steps:
 
 1. Set up a new Supabase project and add the URL and Anon Key to your `.env` file.
 2. Install the Supabase CLI and generate types based on your schema with `npx supabase gen types typescript --project-id YOUR_PROJECT_ID`.
+3. Update Email Templates in Supabase
+
+To enhance the security and usability of your application, it's crucial to update your email templates in Supabase. This ensures that users are redirected to the new confirmation endpoint for various actions. Follow the instructions below to update the URLs in your email templates accordingly.
+
+#### Confirm Signup Template
+
+```html
+<h2>Confirm your signup</h2>
+
+<p>Follow this link to confirm your user:</p>
+<p>
+  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email">
+    Confirm your email
+  </a>
+</p>
+```
+
+#### Invite User Template
+```html
+<h2>You have been invited</h2>
+
+<p>
+  You have been invited to create a user on {{ .SiteURL }}. Follow this link to
+  accept the invite:
+</p>
+
+<p>
+  <a
+    href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite&next=/path-to-your-update-password-page"
+  >
+    Accept the invite
+  </a>
+</p>
+```
+
+#### Magic Link Template
+```html
+<h2>Magic Link</h2>
+
+<p>Follow this link to login:</p>
+<p>
+  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=magiclink">
+    Log In
+  </a>
+</p>
+```
+
+#### Change Email Address Template
+```html
+<h2>Confirm Change of Email</h2>
+
+<p>Follow this link to confirm the update of your email from {{ .Email }} to {{ .NewEmail }}:</p>
+<p>
+  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change">
+    Change Email
+  </a>
+</p>
+```
+
+#### Reset Password Template
+```html
+<h2>Reset Password</h2>
+
+<p>Follow this link to reset the password for your user:</p>
+<p>
+  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/path-to-your-update-password-page">
+    Reset Password
+  </a>
+</p>
+```
+
 
 ### Shadcn
 

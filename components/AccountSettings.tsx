@@ -39,7 +39,7 @@ const AccountSettings = (props: Props) => {
   }, []);
 
   const handleResetPassword = () => {
-    router.push("/reset-password");
+    router.push("/password-reset");
   };
 
   const handleChangeEmail = async () => {
