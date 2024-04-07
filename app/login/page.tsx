@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { SubmitButton } from "./submit-button";
 import { signIn, signUp, signInWithGoogleOAuth } from "./actions";
+import { createClient } from "@/utils/supabase/client";
 
 export default async function Login({
   searchParams,
@@ -14,6 +15,20 @@ export default async function Login({
     } catch (error) {
       console.error("Fehler beim Anmelden mit Google: ", error);
     }
+  };
+
+  const handleResetPassword = async () => {
+    const supabase = createClient();
+    const email = prompt("Für welche Email");
+    if (!email) {
+      console.error("No valid Email");
+      return;
+    }
+    const data = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/password-reset`,
+    });
+    console.log("Reset data");
+    console.log(data);
   };
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
@@ -79,11 +94,18 @@ export default async function Login({
             </p>
           )}
         </form>
+
         <button
           onClick={handleSignInWithGoogle}
           className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
         >
           Sign In with Google
+        </button>
+        <button
+          onClick={handleResetPassword}
+          className="font-extralight text-left text-blue-400"
+        >
+          Forgot password
         </button>
       </div>
     </div>

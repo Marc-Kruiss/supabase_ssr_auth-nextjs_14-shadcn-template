@@ -14,10 +14,14 @@ import { Label } from "./ui/label";
 import Image from "next/image";
 import { User } from "@supabase/supabase-js";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { User as UserIcon } from "lucide-react";
 
 type Props = {};
 
 const AccountSettings = (props: Props) => {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const initUser = async () => {
@@ -31,6 +35,10 @@ const AccountSettings = (props: Props) => {
     initUser();
   }, []);
 
+  const handleResetPassword = () => {
+    router.push("/reset-password");
+  };
+
   return (
     <>
       <h2 className="font-bold text-4xl mb-4 text-white">Account</h2>
@@ -42,12 +50,17 @@ const AccountSettings = (props: Props) => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <Image
-              src={user?.user_metadata.picture}
-              alt="Beschreibung des Bildinhalts"
-              width={200}
-              height={200}
-            />
+            {user?.user_metadata.picture ? (
+              <Image
+                src={user?.user_metadata.picture}
+                alt="Beschreibung des Bildinhalts"
+                width={200}
+                height={200}
+              />
+            ) : (
+              <UserIcon width={200} height={200} />
+            )}
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="first-name">Name</Label>
@@ -74,7 +87,9 @@ const AccountSettings = (props: Props) => {
         <CardFooter>
           <div className="flex flex-col flex-1 gap-4">
             <Button className="bg-blue-800">Change Email</Button>
-            <Button className="bg-blue-800">Reset Password Email</Button>
+            <Button onClick={handleResetPassword} className="bg-blue-800">
+              Reset Password Email
+            </Button>
           </div>
         </CardFooter>
       </Card>
