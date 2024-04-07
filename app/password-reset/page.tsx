@@ -48,7 +48,7 @@ export default function PasswordRecoveryPage() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setState("resetting");
-    supabase.auth
+    const response = await supabase.auth
       .updateUser({ password: values.password })
       .then(() => {
         router.push("/login");
@@ -57,6 +57,8 @@ export default function PasswordRecoveryPage() {
         console.error("error-token-expired");
         setState("default");
       });
+
+    console.log(response);
   };
 
   return (

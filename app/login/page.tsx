@@ -24,11 +24,11 @@ export default async function Login({
       console.error("No valid Email");
       return;
     }
-    const data = await supabase.auth.resetPasswordForEmail(email, {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/password-reset`,
     });
-    console.log("Reset data");
-    console.log(data);
+    if (data) alert("Password updated successfully!");
+    if (error) alert("There was an error updating your password.");
   };
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">

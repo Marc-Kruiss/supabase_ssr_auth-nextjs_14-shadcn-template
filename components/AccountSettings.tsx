@@ -23,20 +23,31 @@ type Props = {};
 const AccountSettings = (props: Props) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
+  const [changedEmail, setChangedEmail] = useState("");
+  const supabase = createClient();
+
   useEffect(() => {
     const initUser = async () => {
-      const supabase = createClient();
       const {
         data: { user },
         error,
       } = await supabase.auth.getUser();
       setUser(user);
+      setChangedEmail(user?.email ?? "");
     };
     initUser();
   }, []);
 
   const handleResetPassword = () => {
     router.push("/reset-password");
+  };
+
+  const handleChangeEmail = async () => {
+    console.log(changedEmail);
+    const { data, error } = await supabase.auth.updateUser({
+      email: changedEmail,
+    });
+    console.log(data, error);
   };
 
   return (
@@ -75,18 +86,20 @@ const AccountSettings = (props: Props) => {
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
-                disabled
                 id="email"
                 placeholder="Enter your email"
                 type="email"
-                value={user?.email}
+                value={changedEmail}
+                onChange={(e) => setChangedEmail(e.target.value)}
               />
             </div>
           </div>
         </CardContent>
         <CardFooter>
           <div className="flex flex-col flex-1 gap-4">
-            <Button className="bg-blue-800">Change Email</Button>
+            <Button className="bg-blue-800" onClick={handleChangeEmail}>
+              Change Email
+            </Button>
             <Button onClick={handleResetPassword} className="bg-blue-800">
               Reset Password Email
             </Button>
