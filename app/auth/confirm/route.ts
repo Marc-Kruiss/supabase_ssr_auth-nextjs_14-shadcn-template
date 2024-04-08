@@ -1,7 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type EmailOtpType } from "@supabase/supabase-js";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -12,10 +10,6 @@ export async function GET(request: NextRequest) {
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
 
-  console.log("CONFIRM PARAMETERS");
-  console.log(searchParams);
-  console.log(token_hash, type, next, redirectTo);
-
   if (token_hash && type) {
     const supabase = createClient();
 
@@ -23,14 +17,37 @@ export async function GET(request: NextRequest) {
       type,
       token_hash,
     });
-    console.log("VERIFY DATA");
-    console.log(data, error);
+
+    redirectTo.searchParams.delete("token_hash");
+    redirectTo.searchParams.delete("type");
+    redirectTo.searchParams.delete("next");
+
     if (!error) {
+      switch (type) {
+        case "signup":
+          redirectTo.pathname = "/protected";
+        case "invite":
+          break;
+        case "magiclink":
+          break;
+        case "recovery":
+          redirectTo.pathname = "/password-reset";
+        case "email_change":
+          break;
+        case "email":
+          break;
+        default:
+          break;
+      }
+      return NextResponse.redirect(redirectTo);
+    } else {
+      // return the user to an error page with some instructions
+      redirectTo.searchParams.set("message", error.message);
+      redirectTo.pathname = `/auth/unauthorized`;
       return NextResponse.redirect(redirectTo);
     }
+  } else {
+    redirectTo.pathname = "/";
+    return NextResponse.redirect(redirectTo);
   }
-
-  // return the user to an error page with some instructions
-  redirectTo.pathname = "/auth/auth-code-error";
-  return NextResponse.redirect(redirectTo);
 }
