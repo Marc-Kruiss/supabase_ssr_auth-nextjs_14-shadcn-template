@@ -17,7 +17,8 @@ export async function GET(request: NextRequest) {
       type,
       token_hash,
     });
-
+    console.log("SEARCH PARAMS");
+    console.log(searchParams);
     redirectTo.searchParams.delete("token_hash");
     redirectTo.searchParams.delete("type");
     redirectTo.searchParams.delete("next");
@@ -33,6 +34,7 @@ export async function GET(request: NextRequest) {
         case "recovery":
           redirectTo.pathname = "/password-reset";
         case "email_change":
+          redirectTo.pathname = "/login";
           break;
         case "email":
           redirectTo.pathname = "/protected";

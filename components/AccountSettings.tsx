@@ -43,11 +43,12 @@ const AccountSettings = (props: Props) => {
   };
 
   const handleChangeEmail = async () => {
-    console.log(changedEmail);
-    const { data, error } = await supabase.auth.updateUser({
-      email: changedEmail,
-    });
-    console.log(data, error);
+    // console.log(changedEmail);
+    // const { data, error } = await supabase.auth.updateUser({
+    //   email: changedEmail,
+    // });
+    // console.log(data, error);
+    router.push("/email-reset");
   };
 
   return (
