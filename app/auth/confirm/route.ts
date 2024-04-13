@@ -35,6 +35,7 @@ export async function GET(request: NextRequest) {
         case "email_change":
           break;
         case "email":
+          redirectTo.pathname = "/protected";
           break;
         default:
           break;

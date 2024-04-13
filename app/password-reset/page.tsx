@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import {
   Form,
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { User } from "@supabase/supabase-js";
 
 // Erstellen eines Zod-Schemas für das Formular
 const formSchema = z
@@ -33,8 +34,25 @@ const formSchema = z
   });
 
 export default function PasswordRecoveryPage() {
-  const router = useRouter();
+  const [user, setUser] = useState<User | null>();
+  const [loading, setLoading] = useState(true);
+
   const supabase = createClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (!data.user) {
+        router.push("/login");
+      } else {
+        setUser(data.user);
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
+
   const [state, setState] = useState<"default" | "resetting">("default");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,6 +78,10 @@ export default function PasswordRecoveryPage() {
 
     console.log(response);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Form {...form}>

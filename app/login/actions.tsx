@@ -29,12 +29,11 @@ export const signUp = async (formData: FormData) => {
   const { error, data } = await supabase.auth.signUp({
     email,
     password,
-    options: {
-      emailRedirectTo: `${origin}/auth/callback`,
-    },
   });
 
   if (error) {
+    console.log("SIGN UP ERROR");
+    console.log(error);
     return redirect(`/login?message=${error.message}`);
   }
   console.log("SIGN UP DATA");
