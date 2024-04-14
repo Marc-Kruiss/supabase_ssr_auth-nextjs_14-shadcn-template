@@ -52,6 +52,7 @@
     "react": "18.2.0",
     "react-day-picker": "^8.10.0",
     "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.51.2",
     "react-resizable-panels": "^2.0.16",
     "sonner": "^1.4.41",
@@ -59,6 +60,7 @@
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.3.3",
+    "uuid": "^9.0.1",
     "vaul": "^0.9.0",
     "zod": "^3.22.4"
   },
@@ -66,6 +68,7 @@
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
+    "@types/uuid": "^9.0.8",
     "encoding": "^0.1.13",
     "prisma": "^5.11.0"
   }

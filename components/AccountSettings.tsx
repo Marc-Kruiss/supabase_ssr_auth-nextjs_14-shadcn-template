@@ -17,14 +17,19 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { User as UserIcon } from "lucide-react";
+import FileUpload from "./file-upload";
 
 type Props = {};
 
 const AccountSettings = (props: Props) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-  const [changedEmail, setChangedEmail] = useState("");
+  const [changedEmail, setChangedEmail] = useState<string | undefined>(
+    undefined
+  );
   const supabase = createClient();
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const initUser = async () => {
@@ -34,12 +39,31 @@ const AccountSettings = (props: Props) => {
       } = await supabase.auth.getUser();
       setUser(user);
       setChangedEmail(user?.email ?? "");
+      setAvatarUrl(user?.user_metadata.picture);
+      setName(user?.user_metadata.name);
     };
     initUser();
   }, []);
 
   const handleResetPassword = () => {
     router.push("/password-reset");
+  };
+
+  const handleSaveAccount = async () => {
+    const { data, error } = await supabase.auth.updateUser({
+      data: { picture: avatarUrl, name: name, full_name: name },
+    });
+    console.log("DATA");
+    console.log(data);
+    console.log("Error");
+    console.log(error);
+
+    if (error) {
+      console.log(error);
+      return null;
+    }
+
+    return data;
   };
 
   const handleChangeEmail = async () => {
@@ -62,25 +86,33 @@ const AccountSettings = (props: Props) => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {user?.user_metadata.picture ? (
-              <Image
-                src={user?.user_metadata.picture}
-                alt="Beschreibung des Bildinhalts"
-                width={200}
-                height={200}
-              />
-            ) : (
-              <UserIcon width={200} height={200} />
-            )}
+            {/* // <Image
+              //   src={user?.user_metadata.picture}
+              //   alt="Beschreibung des Bildinhalts"
+              //   width={200}
+              //   height={200}
+              // /> */}
+            <FileUpload
+              apiEndpoint="avatar"
+              value={avatarUrl}
+              onChange={(url) => {
+                console.log("AVATAR CHANGED");
+                console.log(url);
+                setAvatarUrl(url ? url : "");
+              }}
+            />
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="first-name">Name</Label>
                 <Input
-                  disabled
                   id="first-name"
-                  placeholder="Enter your first name"
-                  value={user?.user_metadata.name}
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => {
+                    console.log("NAME:", e.target.value);
+                    setName(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -104,6 +136,14 @@ const AccountSettings = (props: Props) => {
             <Button onClick={handleResetPassword} className="bg-blue-800">
               Reset Password Email
             </Button>
+            <div className="flex justify-end pt-12">
+              <Button
+                onClick={handleSaveAccount}
+                className="w-1/2 bg-green-800"
+              >
+                Save Account Details
+              </Button>
+            </div>
           </div>
         </CardFooter>
       </Card>
