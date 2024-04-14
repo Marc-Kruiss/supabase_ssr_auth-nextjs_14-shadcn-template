@@ -69,6 +69,19 @@ const AccountSettings = (props: Props) => {
     return data;
   };
 
+  const handleInvitation = async () => {
+    const email = prompt("Send invitation to email:");
+    if (!email) {
+      console.error("No valid Email");
+      return;
+    }
+    // const { data, error } = await supabase.auth.admin.inviteUserByEmail(email);
+    // console.log("DATA");
+    // console.log(data);
+    // console.log("ERROR");
+    // console.log(error);
+  };
+
   const handleChangeEmail = async () => {
     router.push("/email-reset");
   };
@@ -128,7 +141,11 @@ const AccountSettings = (props: Props) => {
             <Button onClick={handleResetPassword} className="bg-blue-800">
               Reset Password Email
             </Button>
-            <div className="flex justify-end pt-12">
+            <div className="flex flex-row gap-12 justify-end pt-12">
+              <Button onClick={handleInvitation} className="w-1/2 bg-blue-800">
+                {isSaving && <Loading />}
+                Invite User
+              </Button>
               <Button
                 onClick={handleSaveAccount}
                 className="w-1/2 bg-green-800"
