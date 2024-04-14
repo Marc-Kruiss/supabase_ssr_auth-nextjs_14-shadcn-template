@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { User as UserIcon } from "lucide-react";
 import FileUpload from "./file-upload";
+import Loading from "./Loading";
 
 type Props = {};
 
@@ -29,6 +30,7 @@ const AccountSettings = (props: Props) => {
   );
   const supabase = createClient();
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -50,6 +52,7 @@ const AccountSettings = (props: Props) => {
   };
 
   const handleSaveAccount = async () => {
+    setIsSaving(true);
     const { data, error } = await supabase.auth.updateUser({
       data: { picture: avatarUrl, name: name, full_name: name },
     });
@@ -62,16 +65,11 @@ const AccountSettings = (props: Props) => {
       console.log(error);
       return null;
     }
-
+    setIsSaving(false);
     return data;
   };
 
   const handleChangeEmail = async () => {
-    // console.log(changedEmail);
-    // const { data, error } = await supabase.auth.updateUser({
-    //   email: changedEmail,
-    // });
-    // console.log(data, error);
     router.push("/email-reset");
   };
 
@@ -86,12 +84,6 @@ const AccountSettings = (props: Props) => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {/* // <Image
-              //   src={user?.user_metadata.picture}
-              //   alt="Beschreibung des Bildinhalts"
-              //   width={200}
-              //   height={200}
-              // /> */}
             <FileUpload
               apiEndpoint="avatar"
               value={avatarUrl}
@@ -141,6 +133,7 @@ const AccountSettings = (props: Props) => {
                 onClick={handleSaveAccount}
                 className="w-1/2 bg-green-800"
               >
+                {isSaving && <Loading />}
                 Save Account Details
               </Button>
             </div>

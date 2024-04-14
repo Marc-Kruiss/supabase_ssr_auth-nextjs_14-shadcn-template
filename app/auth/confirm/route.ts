@@ -28,8 +28,10 @@ export async function GET(request: NextRequest) {
         case "signup":
           redirectTo.pathname = "/protected";
         case "invite":
+          redirectTo.pathname = "/password-reset";
           break;
         case "magiclink":
+          redirectTo.pathname = "/protected";
           break;
         case "recovery":
           redirectTo.pathname = "/password-reset";

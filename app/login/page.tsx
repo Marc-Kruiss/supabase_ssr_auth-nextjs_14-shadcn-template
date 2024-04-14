@@ -72,7 +72,7 @@ export default async function Login({
             type="password"
             name="password"
             placeholder="••••••••"
-            required
+            //required
           />
           <SubmitButton
             formAction={signIn}
