@@ -1,4 +1,4 @@
-import { db } from "@/lib/prisma";
+import { db } from "@/src/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import React from "react";
 

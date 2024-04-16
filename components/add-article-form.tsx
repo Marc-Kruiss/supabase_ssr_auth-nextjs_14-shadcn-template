@@ -1,3 +1,5 @@
+import { db } from "@/src/lib/prisma";
+import { createArticle } from "@/src/lib/queries";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
@@ -10,14 +12,18 @@ export default function AddArticleForm() {
     if (!title) return;
 
     // Hier fügst du den neuen Artikel über Supabase hinzu.
-    const { data, error } = await supabase.from("articles").insert([{ title }]);
+    //const { data, error } = await supabase.from("articles").insert([{ title }]);
+    const c = await supabase.auth.getUser();
+    console.log("User data");
+    console.log(c.data);
+    const data = await createArticle(title);
 
     if (data) {
       console.log("Article added:", data);
       setTitle(""); // Formular zurücksetzen
+    } else {
+      console.error("Unable to fetch data");
     }
-
-    if (error) console.error(error);
   };
 
   return (
